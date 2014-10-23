@@ -13,40 +13,42 @@
 <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @contact } %>
 
 <div class="col-md-9">
-  <div class="panel-heading">
-    <h3 class="panel-title"><%= Spree.t(:contact_us_title) %></h3>
-  </div>
-  <div class="panel-body">
-    <div class="inner">
-      <%= form_for @contact, :url => contacts_path, :html => { :novalidate => '' } do |f| %>
-        <% if SpreeContactUs.require_name %>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title"><%= Spree.t(:contact_us_title) %></h3>
+    </div>
+    <div class="panel-body">
+      <div class="inner">
+        <%= form_for @contact, :url => contacts_path, :html => { :novalidate => '' } do |f| %>
+          <% if SpreeContactUs.require_name %>
+            <p class="field">
+              <%= f.label :name %>
+              <span class="required">*</span><br/>
+              <%= f.text_field :name, class: 'required' %>
+            </p>
+          <% end %>
           <p class="field">
-            <%= f.label :name %>
+            <%= f.label :email %>
             <span class="required">*</span><br/>
-            <%= f.text_field :name, class: 'required' %>
+            <%= f.email_field :email, class: 'required email' %>
+          </p>
+          <% if SpreeContactUs.require_subject %>
+            <p class="field">
+              <%= f.label :subject %>
+              <span class="required">*</span><br/>
+              <%= f.text_field :subject, class: 'required' %>
+            </p>
+          <% end %>
+          <p class="field">
+            <%= f.label :message %>
+            <span class="required">*</span><br/>
+            <%= f.text_area :message, cols: 40, rows: 4, class: 'required' %>
+          </p>
+          <p>
+            <%= f.submit Spree.t(:submit), :alt => Spree.t(:submit), :id => 'contact_us_contact_submit', :title => Spree.t(:submit) %>
           </p>
         <% end %>
-        <p class="field">
-          <%= f.label :email %>
-          <span class="required">*</span><br/>
-          <%= f.email_field :email, class: 'required email' %>
-        </p>
-        <% if SpreeContactUs.require_subject %>
-          <p class="field">
-            <%= f.label :subject %>
-            <span class="required">*</span><br/>
-            <%= f.text_field :subject, class: 'required' %>
-          </p>
-        <% end %>
-        <p class="field">
-          <%= f.label :message %>
-          <span class="required">*</span><br/>
-          <%= f.text_area :message, cols: 40, rows: 4, class: 'required' %>
-        </p>
-        <p>
-          <%= f.submit Spree.t(:submit), :alt => Spree.t(:submit), :id => 'contact_us_contact_submit', :title => Spree.t(:submit) %>
-        </p>
-      <% end %>
+      </div>
     </div>
   </div>
 </div>
